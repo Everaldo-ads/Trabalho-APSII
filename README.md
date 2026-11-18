@@ -19,15 +19,6 @@ Gol 2 | Azul 1 x 1 Verde
 
 **Outro padrão possível** seria o Command, caso o sistema precisasse desfazer um gol registrado por engano. O registro do gol poderia ser representado por um comando com operações para executar e desfazer. Para o requisito atual de avisar vários interessados sempre que o placar muda, Observer é a escolha mais direta. Os dois padrões poderiam coexistir se o projeto ganhasse essa nova função.
 
-## Como os princípios SOLID aparecem no código
-
-| Princípio | Aplicação |
-| --- | --- |
-| Responsabilidade única (S) | A partida registra gols, o narrador exibe avisos e o histórico guarda os resultados. A classe `Menu` cuida da interação pelo console. |
-| Aberto/fechado (O) | Para acrescentar um painel de estádio, basta implementar `ObservadorPlacar` e inscrevê-lo. O método que registra gols continua o mesmo. |
-| Substituição de Liskov (L) | A partida pode chamar `atualizar` em qualquer uma das duas implementações. Ambas aceitam o mesmo placar imutável e respeitam o contrato de receber a atualização. |
-| Segregação de interfaces (I) | A interface exige apenas `atualizar`. Consultar os registros é uma operação específica de `Historico`. |
-| Inversão de dependência (D) | A partida depende da interface `ObservadorPlacar`. A escolha e a inscrição dos observadores concretos acontecem em `Main`. |
 
 ## Como executar
 
