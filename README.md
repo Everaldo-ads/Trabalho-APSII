@@ -19,8 +19,6 @@ Gol 2 | Azul 1 x 1 Verde
 
 **Outro padrão possível** seria o Command, caso o sistema precisasse desfazer um gol registrado por engano. O registro do gol poderia ser representado por um comando com operações para executar e desfazer. Para o requisito atual de avisar vários interessados sempre que o placar muda, Observer é a escolha mais direta. Os dois padrões poderiam coexistir se o projeto ganhasse essa nova função.
 
-Referência sobre o padrão Observer — [Observer — Refactoring.Guru](https://refactoring.guru/pt-br/design-patterns/observer).
-
 ## Como os princípios SOLID aparecem no código
 
 | Princípio | Aplicação |
@@ -32,12 +30,5 @@ Referência sobre o padrão Observer — [Observer — Refactoring.Guru](https:/
 | Inversão de dependência (D) | A partida depende da interface `ObservadorPlacar`. A escolha e a inscrição dos observadores concretos acontecem em `Main`. |
 
 ## Como executar
-
-Use o JDK 21 e o Maven 3.6.3 ou superior. No terminal, abra a pasta que contém o arquivo `pom.xml` e execute:
-
-```sh
-mvn clean package
-java -jar target/placar-observer-1.0.0.jar
-```
 
 **No Eclipse**, selecione **File → Import → Maven → Existing Maven Projects**, escolha a pasta que contém o `pom.xml` e clique em **Finish**. Abra a classe `Main` e selecione **Run As → Java Application**.
