@@ -1,8 +1,5 @@
 package br.edu.placar;
 
-import br.edu.placar.apresentacao.Menu;
-import br.edu.placar.apresentacao.Narrador;
-
 import java.util.Scanner;
 
 // Ponto de entrada: monta os objetos e inicia o menu
