@@ -17,7 +17,11 @@ Gol 1 | Azul 1 x 0 Verde
 Gol 2 | Azul 1 x 1 Verde
 ```
 
-**Outro padrão possível** seria o Command, caso o sistema precisasse desfazer um gol registrado por engano. O registro do gol poderia ser representado por um comando com operações para executar e desfazer. Para o requisito atual de avisar vários interessados sempre que o placar muda, Observer é a escolha mais direta. Os dois padrões poderiam coexistir se o projeto ganhasse essa nova função.
+**Outros padrões possíveis**:
+
+- **Publish/Subscribe (Event Bus):** a partida publicaria um evento `GolMarcado` em um intermediário, e narrador e histórico se inscreveriam nesse tipo de evento. Desacopla ainda mais, pois ninguém conhece ninguém, mas desligar a narração fica mais trabalhoso, porque a inscrição precisaria devolver um recibo para ser cancelada depois.
+- **Mediator:** a partida avisaria um único mediador, e ele decidiria quem recebe o quê. É útil quando as regras de comunicação entre os componentes são complexas, mas o mediador conhece cada colega pelo nome. Adicionar um painel de estádio exigiria editar o mediador, o que perde a vantagem do Aberto/Fechado que o Observer mantém.
+- **Command:** caso o sistema precisasse desfazer um gol registrado por engano. O registro do gol poderia ser representado por um comando com operações para executar e desfazer. Para o requisito atual de avisar vários interessados sempre que o placar muda, Observer é a escolha mais direta. Os dois padrões poderiam coexistir se o projeto ganhasse essa nova função.
 
 
 ## Como executar
