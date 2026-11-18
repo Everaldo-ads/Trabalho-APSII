@@ -1,7 +1,7 @@
 # Placar de futebol com Observer
 
 ## Equipe:
-- José Davi M
+- José Davi Maurício
 - Andrey Ferreira
 - Everaldo Veloso
 
