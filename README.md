@@ -4,6 +4,15 @@
 
 Este sistema de console acompanha uma partida entre os times Azul e Verde. Pelo menu, o usuário registra gols, consulta o placar e vê o histórico da partida. A narração começa ligada e pode ser desligada a qualquer momento. Os dados ficam na memória até o programa ser encerrado.
 
+
+## O que é o padrão Observer?
+
+O Observer é um padrão de projeto comportamental que permite que vários objetos sejam avisados quando o estado de outro objeto muda. Ele funciona como uma inscrição. O objeto que gera os avisos é chamado de observado, e os objetos que se inscrevem para recebê-los são chamados de observadores.
+
+No projeto, a Partida é o objeto observado, e a mudança que interessa aos observadores é o gol. Quando um time marca, a partida primeiro atualiza o placar e depois chama o método atualizar(placar) de cada observador inscrito. Esse método é definido pela interface ObservadorPlacar, e cada observador responde ao aviso de uma forma diferente. O Narrador exibe o novo placar no console, enquanto o Historico guarda o resultado para consulta.
+
+Quando o usuário desliga a narração, o Narrador sai da lista de inscritos. O Historico continua inscrito e registra o próximo gol normalmente. Isso mostra a principal vantagem do padrão nesse projeto. A Partida pode continuar registrando gols da mesma forma, independentemente de quem esteja acompanhando o jogo.
+
 ## Por que usar Observer?
 
 Cada gol interessa a dois componentes por motivos diferentes. O narrador exibe o resultado na hora e o histórico guarda o placar daquele momento para consulta posterior. O padrão **Observer** resolve essa relação de um para muitos e permite que cada componente comece ou pare de acompanhar a partida em tempo de execução.
