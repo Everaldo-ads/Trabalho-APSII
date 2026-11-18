@@ -1,6 +1,5 @@
 package br.edu.placar;
 
-import java.util.Map;
 import java.util.Scanner;
 
 // Menu de console: lê as opções e chama a Partida
@@ -8,21 +7,12 @@ public class Menu {
     private final Partida partida;
     private final Historico historico;
     private final Narrador narrador;
-    // Mapa: opção digitada -> ação
-    private final Map<String, Runnable> acoes;
 
-    // Construtor: recebe as dependências e monta o mapa de opções
+    // Construtor: recebe as dependências do menu
     public Menu(Partida partida, Historico historico, Narrador narrador) {
         this.partida = partida;
         this.historico = historico;
         this.narrador = narrador;
-        acoes = Map.of(
-                "1", () -> partida.registrarGol(Equipe.AZUL),
-                "2", () -> partida.registrarGol(Equipe.VERDE),
-                "3", () -> System.out.println(partida.placarAtual()),
-                "4", this::mostrarHistorico,
-                "5", this::alternarNarracao
-        );
     }
 
     // Laço principal: mostra o menu, lê a opção e executa
@@ -43,18 +33,18 @@ public class Menu {
                 return;
             }
 
-            // Lê a opção; "0" sai do programa
+            // Executa a opção escolhida pelo usuário
             String opcao = entrada.nextLine().trim();
-            if ("0".equals(opcao)) {
-                return;
-            }
-
-            // Executa a ação ou avisa que a opção é inválida
-            Runnable acao = acoes.get(opcao);
-            if (acao == null) {
-                System.out.println("Opção inválida.");
-            } else {
-                acao.run();
+            switch (opcao) {
+                case "1" -> partida.registrarGol(Equipe.AZUL);
+                case "2" -> partida.registrarGol(Equipe.VERDE);
+                case "3" -> System.out.println(partida.placarAtual());
+                case "4" -> mostrarHistorico();
+                case "5" -> alternarNarracao();
+                case "0" -> {
+                    return;
+                }
+                default -> System.out.println("Opção inválida.");
             }
         }
     }
