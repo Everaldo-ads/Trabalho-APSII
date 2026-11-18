@@ -1,5 +1,10 @@
 # Placar de futebol com Observer
 
+## Equipe:
+- José Davi M
+- Andrey Ferreira
+- Everaldo Veloso
+
 ## O projeto
 
 Este sistema de console acompanha uma partida entre os times Azul e Verde. Pelo menu, o usuário registra gols, consulta o placar e vê o histórico da partida. A narração começa ligada e pode ser desligada a qualquer momento. Os dados ficam na memória até o programa ser encerrado.
