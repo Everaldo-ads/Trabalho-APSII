@@ -1,17 +1,43 @@
-# Mural de atividades da turma
+# Placar de futebol com Observer
 
-O mural é um sistema em Java que permite ao professor inscrever alunos, publicar atividades e lançar notas individuais. Pelo Console do Eclipse, é possível consultar as pendências e o histórico de notas de cada aluno. Os dados ficam em memória enquanto o programa está aberto.
+## O projeto
 
-## Por que escolhemos o Observer?
+Este sistema de console acompanha uma partida entre os times Azul e Verde. Pelo menu, o usuário registra gols, consulta o placar e vê o histórico da partida. A narração começa ligada e pode ser desligada a qualquer momento. Os dados ficam na memória até o programa ser encerrado.
 
-Quando o professor publica uma atividade, ela precisa aparecer nas pendências de todos os alunos inscritos. Se ele excluir a atividade, cada aluno precisa removê-la das pendências e apagar a nota correspondente, caso já tenha sido avaliado. O **Observer** é adequado porque uma ação do professor pode provocar mudanças em vários alunos, e o grupo de inscritos pode mudar durante a execução.
+## Por que usar Observer?
 
-No código, `Professor` é o objeto observado e `Aluno` implementa a interface `Observador`. O professor envia um evento e cada aluno atualiza seus próprios dados no método `update()`. Assim, o professor pode publicar uma atividade sem precisar saber como cada aluno guarda suas pendências. No lançamento de uma nota, somente o aluno avaliado recebe o evento, registra a nota e retira a atividade das pendências.
+Cada gol interessa a dois componentes por motivos diferentes. O narrador exibe o resultado na hora e o histórico guarda o placar daquele momento para consulta posterior. O padrão **Observer** resolve essa relação de um para muitos e permite que cada componente comece ou pare de acompanhar a partida em tempo de execução.
 
-## Outro padrão poderia ser usado?
+No código, `Partida` é o objeto observado. Ao registrar um gol, ela atualiza o placar e chama `atualizar(placar)` em cada objeto inscrito pela interface `ObservadorPlacar`. Tanto `Narrador` quanto `Historico` implementam essa interface. Assim, a partida só precisa saber como comunicar a mudança. Cada observador decide o que fazer com ela.
 
-Sim. O **Command** poderia representar cada ação do menu como um objeto, por exemplo, um comando para publicar uma atividade e outro para excluí-la. Isso ajudaria a organizar a execução dessas ações. Para o objetivo principal do mural, o **Observer** é mais adequado porque permite notificar os alunos inscritos assim que a atividade muda.
+Para ver isso na prática, registre um gol do Azul, desligue a narração e registre um gol do Verde. Só o primeiro gol será narrado. Ao abrir o histórico, você verá os dois resultados em ordem:
 
-## Como executar no Eclipse
+```text
+Gol 1 | Azul 1 x 0 Verde
+Gol 2 | Azul 1 x 1 Verde
+```
 
-Com o JDK 17 configurado, importe a pasta que contém o `pom.xml` em **File → Import → Maven → Existing Maven Projects**. Em seguida, clique com o botão direito em `Main.java` e selecione **Run As → Java Application**. O menu aparece na aba **Console**.
+**Outro padrão possível** seria o Command, caso o sistema precisasse desfazer um gol registrado por engano. O registro do gol poderia ser representado por um comando com operações para executar e desfazer. Para o requisito atual de avisar vários interessados sempre que o placar muda, Observer é a escolha mais direta. Os dois padrões poderiam coexistir se o projeto ganhasse essa nova função.
+
+Referência sobre o padrão Observer — [Observer — Refactoring.Guru](https://refactoring.guru/pt-br/design-patterns/observer).
+
+## Como os princípios SOLID aparecem no código
+
+| Princípio | Aplicação |
+| --- | --- |
+| Responsabilidade única (S) | A partida registra gols, o narrador exibe avisos e o histórico guarda os resultados. A classe `Menu` cuida da interação pelo console. |
+| Aberto/fechado (O) | Para acrescentar um painel de estádio, basta implementar `ObservadorPlacar` e inscrevê-lo. O método que registra gols continua o mesmo. |
+| Substituição de Liskov (L) | A partida pode chamar `atualizar` em qualquer uma das duas implementações. Ambas aceitam o mesmo placar imutável e respeitam o contrato de receber a atualização. |
+| Segregação de interfaces (I) | A interface exige apenas `atualizar`. Consultar os registros é uma operação específica de `Historico`. |
+| Inversão de dependência (D) | A partida depende da interface `ObservadorPlacar`. A escolha e a inscrição dos observadores concretos acontecem em `Main`. |
+
+## Como executar
+
+Use o JDK 21 e o Maven 3.6.3 ou superior. No terminal, abra a pasta que contém o arquivo `pom.xml` e execute:
+
+```sh
+mvn clean package
+java -jar target/placar-observer-1.0.0.jar
+```
+
+**No Eclipse**, selecione **File → Import → Maven → Existing Maven Projects**, escolha a pasta que contém o `pom.xml` e clique em **Finish**. Abra a classe `Main` e selecione **Run As → Java Application**.
